@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MultiDbContext.Data.Conventions
@@ -13,10 +10,11 @@ namespace MultiDbContext.Data.Conventions
         {
             foreach (var entity in builder.Model.GetEntityTypes())
             {
-                entity.SetTableName(ConvertToSnakeCase(entity.GetTableName()));
                 // Replace table names
+                entity.SetTableName(ConvertToSnakeCase(entity.GetTableName()));
+                entity.SetSchema(ConvertToSnakeCase(entity.GetSchema()));
 
-                // Replace column names            
+                // Replace column names
                 foreach (var property in entity.GetProperties())
                 {
                     property.SetColumnName(ConvertToSnakeCase(property.GetColumnName()));
